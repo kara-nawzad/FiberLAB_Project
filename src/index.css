@@ -1,0 +1,255 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  body {
+    @apply bg-noc-950 text-noc-200 antialiased;
+    font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    overscroll-behavior: none;
+  }
+
+  input[type='number']::-webkit-outer-spin-button,
+  input[type='number']::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  input[type='number'] {
+    -moz-appearance: textfield;
+  }
+
+  ::-webkit-scrollbar {
+    width: 9px;
+    height: 9px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply rounded-full bg-noc-600;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-noc-500;
+  }
+}
+
+@layer components {
+  .panel {
+    @apply border border-noc-700/70 bg-noc-900/85 backdrop-blur-sm;
+  }
+
+  .panel-header {
+    @apply flex items-center justify-between border-b border-noc-700/70 px-3 py-2.5;
+  }
+
+  .eyebrow {
+    @apply text-[10px] font-semibold uppercase tracking-[0.14em] text-noc-400;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-1.5 rounded-md border px-2.5 py-1.5 text-xs font-medium
+      transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/60
+      disabled:cursor-not-allowed disabled:opacity-45;
+  }
+
+  .btn-primary {
+    @apply btn border-sky-400/40 bg-sky-500/15 text-sky-200 hover:border-sky-300/70 hover:bg-sky-500/25;
+  }
+
+  .btn-ghost {
+    @apply btn border-noc-600/70 bg-noc-800/70 text-noc-200 hover:border-noc-500 hover:bg-noc-700/70;
+  }
+
+  .btn-danger {
+    @apply btn border-red-500/40 bg-red-500/10 text-red-300 hover:border-red-400/70 hover:bg-red-500/20;
+  }
+
+  .field-label {
+    @apply mb-1 block text-[11px] font-medium text-noc-300;
+  }
+
+  .input {
+    @apply w-full rounded-md border border-noc-600/80 bg-noc-950/70 px-2 py-1.5 font-mono text-xs text-noc-200
+      outline-none transition-colors focus:border-sky-400/70 focus:ring-1 focus:ring-sky-400/40;
+  }
+
+  .select {
+    @apply input appearance-none bg-noc-950/70 pr-6;
+    background-image: linear-gradient(45deg, transparent 50%, #5d6c8f 50%),
+      linear-gradient(135deg, #5d6c8f 50%, transparent 50%);
+    background-position: calc(100% - 14px) 50%, calc(100% - 9px) 50%;
+    background-size: 5px 5px, 5px 5px;
+    background-repeat: no-repeat;
+  }
+
+  .metric {
+    @apply rounded-md border border-noc-700/60 bg-noc-950/50 px-2 py-1.5;
+  }
+
+  .metric-value {
+    @apply font-mono text-sm font-semibold text-noc-200;
+  }
+
+  /* `group` cannot be applied via @apply — add it in the markup alongside .tool-card */
+  .tool-card {
+    @apply flex cursor-grab items-center gap-2.5 rounded-lg border border-noc-700/60 bg-noc-850/80
+      px-2.5 py-2 text-left transition-all duration-150 hover:border-sky-400/50 hover:bg-noc-800
+      active:cursor-grabbing;
+  }
+}
+
+/* ---------------------------------------------------------------- React Flow */
+
+.react-flow__attribution {
+  display: none;
+}
+
+.react-flow__node {
+  @apply font-sans;
+}
+
+.react-flow__handle {
+  width: 11px;
+  height: 11px;
+  border-radius: 9999px;
+  background: #131a2b;
+  border: 2px solid #5d6c8f;
+  transition: border-color 150ms ease, box-shadow 150ms ease, transform 150ms ease;
+}
+
+.react-flow__handle:hover {
+  border-color: #38bdf8;
+  box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.18);
+  transform: scale(1.15);
+}
+
+.react-flow__handle.connectingto {
+  border-color: #22d383;
+}
+
+.react-flow__handle.valid {
+  border-color: #22d383;
+}
+
+/* Optical edges ------------------------------------------------------------- */
+
+.react-flow__edge-path {
+  stroke-width: 2.25;
+  fill: none;
+}
+
+.optical-edge .react-flow__edge-path {
+  stroke-dasharray: 7 6;
+}
+
+.optical-edge.is-live .react-flow__edge-path {
+  animation: optical-flow 0.85s linear infinite;
+  filter: drop-shadow(0 0 5px rgba(34, 211, 131, 0.55));
+}
+
+.optical-edge.is-degraded .react-flow__edge-path {
+  animation: optical-flow 1.6s linear infinite;
+  filter: drop-shadow(0 0 5px rgba(240, 84, 79, 0.55));
+}
+
+.optical-edge.is-idle .react-flow__edge-path {
+  stroke-dasharray: 3 7;
+  opacity: 0.75;
+}
+
+@keyframes optical-flow {
+  to {
+    stroke-dashoffset: -26;
+  }
+}
+
+.react-flow__edge.selected .react-flow__edge-path,
+.react-flow__edge:hover .react-flow__edge-path {
+  stroke-width: 3.5;
+}
+
+.react-flow__edge-textbg {
+  fill: #0a0e18;
+}
+
+.react-flow__edge-text {
+  fill: #c2cbdd;
+  font-size: 10px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+.react-flow__node.selected .node-shell {
+  border-color: rgba(56, 189, 248, 0.9) !important;
+  box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.45), 0 0 26px -6px rgba(56, 189, 248, 0.75) !important;
+}
+
+.react-flow__controls {
+  @apply overflow-hidden rounded-lg border border-noc-700/70 shadow-panel;
+}
+
+.react-flow__controls-button {
+  @apply border-b border-noc-700/70 bg-noc-900/90 text-noc-200;
+  fill: currentColor;
+  width: 28px;
+  height: 28px;
+}
+
+.react-flow__controls-button:hover {
+  @apply bg-noc-700;
+}
+
+.react-flow__controls-button svg {
+  fill: currentColor;
+}
+
+.react-flow__minimap {
+  @apply overflow-hidden rounded-lg border border-noc-700/70;
+  background: #0a0e18;
+}
+
+/* Range inputs -------------------------------------------------------------- */
+
+input[type='range'] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 4px;
+  border-radius: 9999px;
+  background: #27324f;
+  outline: none;
+}
+
+input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 9999px;
+  background: #38bdf8;
+  border: 2px solid #0a0e18;
+  cursor: pointer;
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.18);
+}
+
+input[type='range']::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 9999px;
+  background: #38bdf8;
+  border: 2px solid #0a0e18;
+  cursor: pointer;
+}
